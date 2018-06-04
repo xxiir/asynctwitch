@@ -1,4 +1,5 @@
 import asyncio
+import async_timeout
 import traceback
 import sys
 import os
@@ -58,7 +59,7 @@ def _setup_time_db(cursor):
 @asyncio.coroutine
 def _get_url(loop, url):
     session = aiohttp.ClientSession(loop=loop)
-    with aiohttp.Timeout(10):
+    with async_timeout.timeout(10):
         response = yield from session.get(url)
         try:
             # other statements
